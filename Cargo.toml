@@ -1,0 +1,25 @@
+[package]
+name = "html-swap"
+version = "0.1.0"
+authors = ["Donatas Rasiukevičius <donatas@rasiukevicius.dev>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+
+[dependencies]
+reqwest = "0.12.0"
+wasm-bindgen = "0.2.92"
+web-sys = { version = "0.3.69", features = ["Document", "Element"] }
+
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+
+[dev-dependencies]
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"
