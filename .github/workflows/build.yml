@@ -1,0 +1,20 @@
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up wasmpack
+        uses: jetli/wasm-pack-action@v0.4.0
+      - run: |
+          wasm-pack build --target no-modules
+      - name: Store pkg artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg
+          path: pkg
