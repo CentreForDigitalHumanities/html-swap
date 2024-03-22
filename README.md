@@ -18,6 +18,7 @@ Just download the `pkg` zipfile, extract, and reference it as described below.
 wasm-pack build --target no-modules
 ```
 
+Or download the `pkg.zip` from the releases.
 
 ### Include in your base HTML
 
