@@ -2,12 +2,6 @@ use core::panic;
 
 use wasm_bindgen::prelude::*;
 
-// add console.log
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
-}
 
 #[wasm_bindgen]
 pub fn perform_swap(doc: &web_sys::Document, swap_element: web_sys::Element) -> Result<(), JsValue> {
