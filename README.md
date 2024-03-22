@@ -84,3 +84,4 @@ You can perform multiple updates by providing multiple elements in the same resp
 
 - This only works with `input` and `a` tags
 - For the `input` tag method it must be part of a form and of type submit
+- yes, you have to append `return false` to every invocation (or wrap it in a custom function)
