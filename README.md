@@ -4,8 +4,8 @@ This is for you if:
 - you have used `htmx`, but decided that its main feature is the `oob-swap` and that it has too many bells and whistles for just that
 - you are (rightfully) very excited about using webassembly
 
-Also, this does not require you to understand how to use `npm` or `yarn` or whatever is the cool thing at the moment of reading.
-Just download the `pkg` and reference it as described below.
+Also, this does not require you to understand how to use `npm` or `yarn` or whatever is cool at the moment of reading.
+Just download the `pkg` zipfile, extract, and reference it as described below.
 
 
 ## 🚴 Usage
