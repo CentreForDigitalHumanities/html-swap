@@ -1,84 +1,70 @@
-<div align="center">
-
-  <h1><code>wasm-pack-template</code></h1>
-
-  <strong>A template for kick starting a Rust and WebAssembly project using <a href="https://github.com/rustwasm/wasm-pack">wasm-pack</a>.</strong>
-
-  <p>
-    <a href="https://travis-ci.org/rustwasm/wasm-pack-template"><img src="https://img.shields.io/travis/rustwasm/wasm-pack-template.svg?style=flat-square" alt="Build Status" /></a>
-  </p>
-
-  <h3>
-    <a href="https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html">Tutorial</a>
-    <span> | </span>
-    <a href="https://discordapp.com/channels/442252698964721669/443151097398296587">Chat</a>
-  </h3>
-
-  <sub>Built with 🦀🕸 by <a href="https://rustwasm.github.io/">The Rust and WebAssembly Working Group</a></sub>
-</div>
-
-## About
-
-[**📚 Read this template tutorial! 📚**][template-docs]
-
-This template is designed for compiling Rust libraries into WebAssembly and
-publishing the resulting package to NPM.
-
-Be sure to check out [other `wasm-pack` tutorials online][tutorials] for other
-templates and usages of `wasm-pack`.
-
-[tutorials]: https://rustwasm.github.io/docs/wasm-pack/tutorials/index.html
-[template-docs]: https://rustwasm.github.io/docs/wasm-pack/tutorials/npm-browser-packages/index.html
-
 ## 🚴 Usage
 
-### 🐑 Use `cargo generate` to Clone this Template
-
-[Learn more about `cargo generate` here.](https://github.com/ashleygwilliams/cargo-generate)
-
-```
-cargo generate --git https://github.com/rustwasm/wasm-pack-template.git --name my-project
-cd my-project
-```
 
 ### 🛠️ Build with `wasm-pack build`
 
 ```
-wasm-pack build
+wasm-pack build --target web
 ```
 
-### 🔬 Test in Headless Browsers with `wasm-pack test`
 
+### Include in your base HTML
+
+```html
+<script src='pkg/html_swap.js'></script>
+<script>
+    const { swap_ctl } = wasm_bindgen;
+    async function run() {
+    await wasm_bindgen();
+    }
+    run();
+</script>
 ```
-wasm-pack test --headless --firefox
+
+Then in your HTML mark elements that serve as a swap controller by setting the `data-swap-ctl` property. 
+The supported tags are `a` tags which will issue a get request and `input` elements with a type of submit which will perform the relevant form action.
+
+```html
+<form method="get" action="/search">
+    <input type="text" name="q" />
+    <input type="submit" onclick="swap_ctl(this); return false;" value="Search" />
+</form>
 ```
 
-### 🎁 Publish to NPM with `wasm-pack publish`
-
-```
-wasm-pack publish
+```html
+<a href="/example" onclick="swap_ctl(this); return false;">Link</a>
 ```
 
-## 🔋 Batteries Included
+This will prevent default behavior of showing the response and instead will update the page with the response.
+A response is comprised of a series of updates that apply to slots on the page. 
 
-* [`wasm-bindgen`](https://github.com/rustwasm/wasm-bindgen) for communicating
-  between WebAssembly and JavaScript.
-* [`console_error_panic_hook`](https://github.com/rustwasm/console_error_panic_hook)
-  for logging panic messages to the developer console.
-* `LICENSE-APACHE` and `LICENSE-MIT`: most Rust projects are licensed this way, so these are included for you
+For instance, consider the following `index.html`
 
-## License
+```html
+<a href="example.html" onclick="swap_ctl(this); return false;">Link</a>
+<div id="slot-1">Default content</div>
+```
 
-Licensed under either of
+And the following `example.html`
 
-* Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
-* MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+```html
+<div id="slot-1">Updated Content</div>
+```
 
-at your option.
+By clicking the anchor tag you will replace the inner html of the initial slot with the content in the new slot. 
+You can perform multiple updates by providing multiple elements in the same response:
 
-### Contribution
+`index.html`
 
-Unless you explicitly state otherwise, any contribution intentionally
-submitted for inclusion in the work by you, as defined in the Apache-2.0
-license, shall be dual licensed as above, without any additional terms or
-conditions.
+```html
+<a href="example.html" onclick="swap_ctl(this); return false;">Link</a>
+<div id="slot-1">Default content</div>
+<div id="slot-2">Default content</div>
+```
+
+`example.html`
+
+```html
+<div id="slot-1">Update 1</div>
+<div id="slot-2">Update 2</div>
+```
