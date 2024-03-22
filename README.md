@@ -33,8 +33,8 @@ Or download the `pkg.zip` from the releases.
 </script>
 ```
 
-Then in your HTML mark elements that serve as a swap controller by setting the `data-swap-ctl` property. 
-The supported tags are `a` tags which will issue a get request and `input` elements with a type of submit which will perform the relevant form action.
+Then in your HTML mark elements that serve as a swap controller by changing the `onclick` behavior to `swap_ctl(this); return false;`. 
+The supported tags are `a` tags which will issue a get request and `input` elements with a type of `submit` which will perform the relevant form action.
 
 ```html
 <form method="get" action="/search">
@@ -63,7 +63,7 @@ And the following `example.html`
 <div id="slot-1">Updated Content</div>
 ```
 
-By clicking the anchor tag you will replace the inner html of the initial slot with the content in the new slot. 
+By clicking the anchor tag you will replace the inner html of the initial slot with the content in the slot from the response. 
 You can perform multiple updates by providing multiple elements in the same response:
 
 `index.html`
