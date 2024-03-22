@@ -93,7 +93,10 @@ pub async fn swap_ctl(el: web_sys::Element) {
         },
         "input" => {
             let input_el = el.dyn_ref::<web_sys::HtmlInputElement>().unwrap();
-            form_swap(input_el).await;
+            // check if input_el type is submit
+            if input_el.type_() == "submit" {
+                form_swap(input_el).await;
+            }
         },
         _ => ()
     }
